@@ -1,7 +1,8 @@
 package net.emilsg.backported_wolves.mixin;
 
-import net.emilsg.backported_wolves.tags.ModBiomeTags;
+
 import net.emilsg.backported_wolves.variant.WolfEntityVariant;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,12 +29,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class WolfEntityMixin extends MobEntityMixin {
 
     @Unique
-    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> backportedWolvesForge$VARIANT = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
 
     @Inject(method = "defineSynchedData", at = @At("HEAD"))
     public void initTracker (CallbackInfo ci) {
         Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().define(VARIANT, 0);
+        wolfEntity.getEntityData().define(backportedWolvesForge$VARIANT, 0);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("HEAD"))
@@ -43,30 +45,31 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
     @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
     public void readNBTData (CompoundTag pCompound, CallbackInfo ci) {
         Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().set(VARIANT, pCompound.getInt("Variant"));
+        wolfEntity.getEntityData().set(backportedWolvesForge$VARIANT, pCompound.getInt("Variant"));
     }
 
     @Override
     protected void onInitialize(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, SpawnGroupData pSpawnData, CompoundTag pDataTag, CallbackInfoReturnable<SpawnGroupData> cir) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        Holder<Biome> registryEntry = pLevel.getBiome(wolfEntity.getOnPos());
-        WolfEntityVariant variant = WolfEntityVariant.byId(WolfEntityVariant.PALE_WOLF.getId());
+        Wolf wolf = (Wolf) (Object) this;
+        BlockPos blockPos = new BlockPos(wolf.getBlockX(), wolf.getBlockY(), wolf.getBlockZ());
+        Holder<Biome> biome = pLevel.getBiome(blockPos);
+        WolfEntityVariant variant = WolfEntityVariant.PALE_WOLF;
 
-        if(registryEntry.is(ModBiomeTags.SPAWNS_WOODS_WOLF)) {
+        if(biome.is(Biomes.FOREST)) {
             variant = WolfEntityVariant.WOODS_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_ASHEN_WOLF)) {
+        } else if(biome.is(Biomes.SNOWY_TAIGA)) {
             variant = WolfEntityVariant.ASHEN_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_BLACK_WOLF)) {
+        } else if(biome.is(Biomes.OLD_GROWTH_PINE_TAIGA)) {
             variant = WolfEntityVariant.BLACK_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_CHESTNUT_WOLF)) {
+        } else if(biome.is(Biomes.OLD_GROWTH_SPRUCE_TAIGA)) {
             variant = WolfEntityVariant.CHESTNUT_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_RUSTY_WOLF)) {
+        } else if(biome.is(Biomes.SPARSE_JUNGLE)) {
             variant = WolfEntityVariant.RUSTY_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_SPOTTED_WOLF)) {
+        } else if(biome.is(Biomes.SAVANNA_PLATEAU)) {
             variant = WolfEntityVariant.SPOTTED_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_STRIPED_WOLF)) {
+        } else if(biome.is(Biomes.WOODED_BADLANDS)) {
             variant = WolfEntityVariant.STRIPED_WOLF;
-        } else if(registryEntry.is(ModBiomeTags.SPAWNS_SNOWY_WOLF)) {
+        } else if(biome.is(Biomes.GROVE)) {
             variant = WolfEntityVariant.SNOWY_WOLF;
         }
 
@@ -91,7 +94,7 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
 
         int variant = wolfEntity.getRandom().nextBoolean() ? nbtParent.getInt("Variant") : nbtOtherParent.getInt("Variant");
 
-        child.getEntityData().set(VARIANT, variant & 255);
+        child.getEntityData().set(backportedWolvesForge$VARIANT, variant & 255);
 
         childNbt.putInt("Variant", variant);
 
@@ -104,12 +107,12 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
 
     public int getTypeVariant() {
         Wolf wolfEntity = (Wolf) (Object) this;
-        return wolfEntity.getEntityData().get(VARIANT);
+        return wolfEntity.getEntityData().get(backportedWolvesForge$VARIANT);
     }
 
     public void setVariant(WolfEntityVariant variant) {
         Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().set(VARIANT, variant.getId() & 255);
+        wolfEntity.getEntityData().set(backportedWolvesForge$VARIANT, variant.getId() & 255);
     }
 
 }

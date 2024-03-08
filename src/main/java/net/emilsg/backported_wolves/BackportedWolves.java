@@ -1,6 +1,7 @@
 package net.emilsg.backported_wolves;
 
 import com.mojang.logging.LogUtils;
+import net.emilsg.backported_wolves.tags.ModBiomeTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -20,8 +21,8 @@ public class BackportedWolves {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public BackportedWolves() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
+        ModBiomeTags.registerBiomeTags();
     }
 
     @SubscribeEvent

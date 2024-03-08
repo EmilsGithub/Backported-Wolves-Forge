@@ -1,7 +1,8 @@
 package net.emilsg.backported_wolves.tags;
 
 import net.emilsg.backported_wolves.BackportedWolves;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
@@ -17,7 +18,11 @@ public class ModBiomeTags {
     public static final TagKey<Biome> SPAWNS_STRIPED_WOLF = create(BackportedWolves.MOD_ID, "spawns_striped_wolf");
     public static final TagKey<Biome> SPAWNS_SNOWY_WOLF = create(BackportedWolves.MOD_ID, "spawns_snowy_wolf");
 
-    private static TagKey<Biome> create(String namespace, String path) {
-        return TagKey.create(Registries.BIOME, new ResourceLocation(namespace, path));
+    private static TagKey<Biome> create(String pName, String path) {
+        return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(pName, path));
+    }
+
+    public static void registerBiomeTags() {
+
     }
 }
