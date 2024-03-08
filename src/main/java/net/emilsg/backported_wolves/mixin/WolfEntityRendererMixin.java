@@ -4,7 +4,6 @@ import net.emilsg.backported_wolves.BackportedWolves;
 
 import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.contents.NbtContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
 import org.spongepowered.asm.mixin.Mixin;

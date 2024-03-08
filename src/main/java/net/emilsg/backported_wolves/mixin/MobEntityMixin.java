@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
 public abstract class MobEntityMixin {
-    @Shadow public abstract void spawnAnim();
 
     @Inject(
             method = "finalizeSpawn",
