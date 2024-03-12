@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#backported_wolves:spawns_rusty_wolf",
+  "biomes": "#backported_wolves:spawns_black_wolf",
   "spawners": {
     "type": "minecraft:wolf",
     "weight": 8,

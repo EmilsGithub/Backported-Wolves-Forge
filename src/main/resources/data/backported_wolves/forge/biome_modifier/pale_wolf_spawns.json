@@ -1,10 +1,10 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#backported_wolves:spawns_rusty_wolf",
+  "biomes": "#backported_wolves:pale_wolf_spawns",
   "spawners": {
     "type": "minecraft:wolf",
     "weight": 8,
-    "minCount": 2,
+    "minCount": 4,
     "maxCount": 4
   }
 }
