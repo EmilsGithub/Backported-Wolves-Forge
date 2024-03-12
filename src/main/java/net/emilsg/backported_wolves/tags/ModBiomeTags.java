@@ -21,8 +21,4 @@ public class ModBiomeTags {
     private static TagKey<Biome> create(String pName, String path) {
         return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(pName, path));
     }
-
-    public static void registerBiomeTags() {
-
-    }
 }

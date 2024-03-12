@@ -1,7 +1,7 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
-    "minecraft:sparse_jungle"
+    "#backported_wolves:spawns_rusty_wolf"
   ],
   "spawners": {
     "type": "minecraft:wolf",
